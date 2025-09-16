@@ -1,9 +1,6 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import analyseRoutes from './routes/analyseRoutes.js';
-
-dotenv.config();
+import express from "express";
+import cors from "cors";
+import analyseRoutes from "./routes/analyseRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -13,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/analyse', analyseRoutes);
+app.use("/api/analyse", analyseRoutes);
 
 // Start server
 app.listen(PORT, () => {

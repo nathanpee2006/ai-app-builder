@@ -5,12 +5,15 @@ import { ArrowUpIcon } from "lucide-react";
 import { analyseDescription } from "./utils/apiUtils";
 
 function App() {
-  const [inputValue, setInputValue] = useState("");
+  const [description, setDescription] = useState("");
+  const [capturedRequirements, setCapturedRequirements] = useState({});
+  console.log(capturedRequirements);
 
   const handleSubmit = async () => {
     try {
-      console.log("Submitted:", inputValue);
-      await analyseDescription(inputValue);
+      const response = await analyseDescription(description);
+      console.log(response);
+      setCapturedRequirements(response.analysis);
     } catch (error) {
       console.error("Error submitting:", error);
     }
@@ -29,8 +32,8 @@ function App() {
           <div className="relative w-full max-w-2xl">
             <Textarea
               placeholder="ask to build..."
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               className="w-full h-14 px-6 text-lg bg-gray-800 border-gray-700 text-white placeholder-gray-400 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
             />
 
