@@ -1,6 +1,27 @@
 import express from "express";
 import cors from "cors";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 import analyseRoutes from "./routes/analyseRoutes.js";
+
+dotenv.config();
+
+const getMongoURI = () => {
+  if (process.env.NODE_ENV === "production") {
+    return process.env.MONGODB_URI_PROD;
+  }
+  return process.env.MONGODB_URI_DEV;
+};
+
+mongoose
+  .connect(getMongoURI())
+  .then(() => {
+    console.log("Connected to MongoDB server");
+  })
+  .catch((error) => {
+    console.error("MongoDB connection error:", error);
+    process.exit(1);
+  });
 
 const app = express();
 const PORT = process.env.PORT || 5000;

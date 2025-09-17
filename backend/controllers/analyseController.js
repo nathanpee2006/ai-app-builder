@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import { OpenAI } from "openai";
 import { SYSTEM_PROMPT } from "../prompts/systemPrompts.js";
+import { Project } from "../models/Project.js";
 
 dotenv.config();
 
