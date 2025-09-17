@@ -35,12 +35,9 @@ const projectSchema = new mongoose.Schema({
 
   uiMetadata: {
     type: {
-      formConfig: [
-        {
-          entity: {
-            type: String,
-            required: true,
-          },
+      formConfig: {
+        type: Map,
+        of: {
           fields: [
             {
               name: { type: String, required: true },
@@ -48,16 +45,15 @@ const projectSchema = new mongoose.Schema({
             },
           ],
         },
-      ],
-      roleFeatureMapping: [
-        {
-          role: {
-            type: String,
-            required: true,
-          },
+        required: true,
+      },
+      roleFeatureMapping: {
+        type: Map,
+        of: {
           features: [{ type: String }],
         },
-      ],
+        required: true,
+      },
     },
     required: true,
   },
