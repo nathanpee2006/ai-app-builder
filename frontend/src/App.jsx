@@ -6,14 +6,13 @@ import { analyseDescription } from "./utils/apiUtils";
 
 function App() {
   const [description, setDescription] = useState("");
-  const [capturedRequirements, setCapturedRequirements] = useState({});
-  console.log(capturedRequirements);
+  const [projectData, setProjectData] = useState({});
+  console.log(projectData);
 
   const handleSubmit = async () => {
     try {
       const response = await analyseDescription(description);
-      console.log(response);
-      setCapturedRequirements(response.analysis);
+      setProjectData(response);
     } catch (error) {
       console.error("Error submitting:", error);
     }
