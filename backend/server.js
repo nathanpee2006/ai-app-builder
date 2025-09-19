@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import analyseRoutes from "./routes/analyseRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js";
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/analyse", analyseRoutes);
+app.use("/api/projects", projectRoutes);
 
 // Start server
 app.listen(PORT, () => {

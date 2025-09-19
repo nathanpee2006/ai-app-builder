@@ -1,8 +1,8 @@
-import express from 'express';
-import { analyseController } from '../controllers/analyseController.js';
+import express from "express";
+import { analyseController } from "../controllers/analyseController.js";
 
 const router = express.Router();
 
-router.post('/', analyseController);
+router.post("/", analyseController);
 
 export default router;

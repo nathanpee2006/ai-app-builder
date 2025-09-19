@@ -9,8 +9,27 @@ export async function analyseDescription(description) {
     });
     return response.data;
   } catch (error) {
-    console.log(error);
     console.error("Error during POST request:", error);
+    throw error;
+  }
+}
+
+export async function getProjects() {
+  try {
+    const response = await axios.get(`${API_URL}/api/projects`);
+    return response.data.projects;
+  } catch (error) {
+    console.error("Error during GET request:", error);
+    throw error;
+  }
+}
+
+export async function getProject(projectId) {
+  try {
+    const response = await axios.get(`${API_URL}/api/projects/${projectId}`);
+    return response.data.project;
+  } catch (error) {
+    console.error("Error during GET request:", error);
     throw error;
   }
 }
