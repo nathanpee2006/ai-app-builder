@@ -2,25 +2,10 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, RefreshCw, Globe } from "lucide-react";
+import { uiHelpers } from "../utils/uiHelpers";
 
 function MockUIDisplay({ requirements, uiMetadata }) {
-  if (!uiMetadata) return null;
-
-  const formConfig = uiMetadata.formConfig || {};
-  const roleFeatureMapping = uiMetadata.roleFeatureMapping || {};
-
   const roles = requirements?.roles || [];
-  const entities = requirements?.entities || [];
-
-  const entitiesForRole = (roleName) => {
-    const feats = (roleFeatureMapping?.[roleName]?.features || []).map((f) =>
-      String(f).toLowerCase()
-    );
-    const matched = entities.filter((e) =>
-      feats.some((f) => f.includes(String(e).toLowerCase()))
-    );
-    return matched.length ? matched : entities; // fallback to all if none match
-  };
 
   const defaultTab = roles[0] || "role-0";
 
@@ -87,45 +72,48 @@ function MockUIDisplay({ requirements, uiMetadata }) {
                   {role} Features
                 </div>
                 <ul className="list-disc list-inside text-gray-700">
-                  {(roleFeatureMapping?.[role]?.features || []).map(
-                    (feat, idx) => (
-                      <li key={`${role}-feat-${idx}`}>{feat}</li>
-                    )
-                  )}
+                  {uiHelpers
+                    .getFeaturesForRole(role, uiMetadata)
+                    .map((f, idx) => (
+                      <li key={`${f}-${idx}`}>{f}</li>
+                    ))}
                 </ul>
               </div>
 
-              {entitiesForRole(role).map((entityName) => {
-                const config = formConfig?.[entityName];
-                if (!config) return null;
-                return (
-                  <div
-                    key={`${role}-${entityName}`}
-                    className="rounded-xl border border-gray-200 bg-white p-4 space-y-3"
-                  >
-                    <div className="text-gray-900 font-medium">
-                      {entityName} Form
+              {uiHelpers
+                .getFormsForRole(role, uiMetadata)
+                .map(({ entityName, fields }) => {
+                  return (
+                    <div
+                      key={`${role}-${entityName}`}
+                      className="rounded-xl border border-gray-200 bg-white p-4 space-y-3"
+                    >
+                      <div className="text-gray-900 font-medium">
+                        {entityName} Form
+                      </div>
+                      <div className="grid grid-cols-1 gap-3">
+                        {(fields || []).map((field, idx) => (
+                          <div
+                            key={`${entityName}-${idx}`}
+                            className="space-y-1"
+                          >
+                            <label className="text-sm text-gray-700">
+                              {field.name}
+                            </label>
+                            <Input
+                              type={field.type}
+                              placeholder={field.name}
+                              className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                      <div className="pt-1">
+                        <Button>Save {entityName}</Button>
+                      </div>
                     </div>
-                    <div className="grid grid-cols-1 gap-3">
-                      {(config?.fields || []).map((field, idx) => (
-                        <div key={`${entityName}-${idx}`} className="space-y-1">
-                          <label className="text-sm text-gray-700">
-                            {field.name}
-                          </label>
-                          <Input
-                            type={field.type}
-                            placeholder={field.name}
-                            className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                    <div className="pt-1">
-                      <Button>Save {entityName}</Button>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </TabsContent>
           ))}
         </Tabs>

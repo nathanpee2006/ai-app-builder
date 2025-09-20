@@ -44,12 +44,13 @@ FORM CONFIGURATION RULES:
   * "url" - for website links
 - Consider what users would actually need to input
 
-ROLE-FEATURE MAPPING RULES:
-- Assign features to roles based on logical permissions
-- Admin/Manager roles typically get most/all features
+ROLE PERMISSIONS RULES:
+- Assign features AND entities to roles based on logical permissions
+- Admin/Manager roles typically get most/all features and entities
 - Regular user roles get subset focused on their needs
-- Consider real-world access patterns
-- Each role should have 2-6 features
+- Consider real-world access patterns for both features and data access
+- Each role should have 2-6 features and 1-5 allowed entities
+- Think about which data each role type should be able to access
 
 APP NAME RULES:
 - 2-4 words maximum
@@ -80,12 +81,14 @@ Return ONLY valid JSON in this exact structure:
         ]
       }
     },
-    "roleFeatureMapping": {
+    "rolePermissions": {
       "role1": {
-        "features": ["feature1", "feature2"]
+        "features": ["feature1", "feature2"],
+        "allowedEntities": ["entity1", "entity2"]
       },
       "role2": {
-        "features": ["feature3", "feature4", "feature5"]
+        "features": ["feature3", "feature4"],
+        "allowedEntities": ["entity1"]
       }
     }
   }
@@ -98,8 +101,9 @@ CONSTRAINTS:
 - Maximum 8 features
 - All strings must be properly capitalized
 - Entity names in formConfig must exactly match entity names in extractedRequirements.entities
-- Role names in roleFeatureMapping must exactly match role names in extractedRequirements.roles
-- Features in roleFeatureMapping must come from extractedRequirements.features
+- Role names in rolePermissions must exactly match role names in extractedRequirements.roles
+- Features in rolePermissions must come from extractedRequirements.features
+- AllowedEntities in rolePermissions must come from extractedRequirements.entities
 - Use only the specified field types (text, email, number, date, select, textarea, tel, url)
 
 EXAMPLES:
@@ -141,15 +145,18 @@ Output:
         ]
       }
     },
-    "roleFeatureMapping": {
+    "rolePermissions": {
       "Customer": {
-        "features": ["Browse Menu", "Place Order", "Track Order"]
+        "features": ["Browse Menu", "Place Order", "Track Order"],
+        "allowedEntities": ["MenuItem", "Order"]
       },
       "Staff": {
-        "features": ["Browse Menu", "View Orders", "Process Payment"]
+        "features": ["Browse Menu", "View Orders", "Process Payment"],
+        "allowedEntities": ["MenuItem", "Order", "Customer"]
       },
       "Manager": {
-        "features": ["Browse Menu", "View Orders", "Manage Menu", "Process Payment"]
+        "features": ["Browse Menu", "View Orders", "Manage Menu", "Process Payment"],
+        "allowedEntities": ["MenuItem", "Order", "Customer"]
       }
     }
   }
@@ -191,15 +198,18 @@ Output:
         ]
       }
     },
-    "roleFeatureMapping": {
+    "rolePermissions": {
       "Reader": {
-        "features": ["Add Comment"]
+        "features": ["Add Comment"],
+        "allowedEntities": ["Comment"]
       },
       "Writer": {
-        "features": ["Write Post", "Publish Post", "Add Comment"]
+        "features": ["Write Post", "Publish Post", "Add Comment"],
+        "allowedEntities": ["Post", "Comment"]
       },
       "Editor": {
-        "features": ["Write Post", "Publish Post", "Add Comment", "Moderate Comments", "View Analytics"]
+        "features": ["Write Post", "Publish Post", "Add Comment", "Moderate Comments", "View Analytics"],
+        "allowedEntities": ["Post", "Comment", "User"]
       }
     }
   }

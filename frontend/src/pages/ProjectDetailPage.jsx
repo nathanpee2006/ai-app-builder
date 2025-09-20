@@ -54,13 +54,16 @@ function ProjectDetailPage() {
   }
 
   return (
-    <>
-      <div className="bg-gray-800 rounded-lg p-6">
-        <h2 className="text-xl font-semibold text-white mb-3">Description</h2>
-        <p className="text-gray-300">{project.userDescription}</p>
+    <div className="w-full flex justify-center p-4">
+      <div className="w-full max-w-5xl space-y-8">
+        <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
+          <h2 className="text-xl font-semibold text-white mb-3">Description</h2>
+          <p className="text-gray-300">{project.userDescription}</p>
+        </div>
+
+        <ProjectResults projectData={project} />
       </div>
-      <ProjectResults projectData={project} />
-    </>
+    </div>
   );
 }
 

@@ -47,10 +47,11 @@ const projectSchema = new mongoose.Schema({
         },
         required: true,
       },
-      roleFeatureMapping: {
+      rolePermissions: {
         type: Map,
         of: {
-          features: [{ type: String }],
+          features: [String],
+          allowedEntities: [String],
         },
         required: true,
       },

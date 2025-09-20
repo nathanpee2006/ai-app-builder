@@ -74,8 +74,8 @@ export const analyseController = async (req, res) => {
       Object.entries(aiResponse.uiMetadata.formConfig || {})
     );
 
-    const roleFeatureMappingMap = new Map(
-      Object.entries(aiResponse.uiMetadata.roleFeatureMapping || {})
+    const rolePermissionsMap = new Map(
+      Object.entries(aiResponse.uiMetadata.rolePermissions || {})
     );
 
     // Save to database
@@ -86,7 +86,7 @@ export const analyseController = async (req, res) => {
         extractedRequirements: aiResponse.extractedRequirements,
         uiMetadata: {
           formConfig: formConfigMap,
-          roleFeatureMapping: roleFeatureMappingMap,
+          rolePermissions: rolePermissionsMap,
         },
       });
     } catch (dbError) {
