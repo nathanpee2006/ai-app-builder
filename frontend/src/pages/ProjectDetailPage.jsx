@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import ProjectResults from "../components/ProjectResults";
 
 import { getProject } from "../utils/apiUtils";
 
@@ -53,46 +54,13 @@ function ProjectDetailPage() {
   }
 
   return (
-    <div className="w-full h-full p-6">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-white mb-4">
-          {project.extractedRequirements.appName}
-        </h1>
-
-        <div className="bg-gray-800 rounded-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-white mb-3">
-            Project Details
-          </h2>
-          <div className="space-y-2">
-            <p className="text-gray-300">
-              <span className="font-medium">ID:</span> {project._id}
-            </p>
-            <div className="text-gray-300">
-              <span className="font-medium">AI Captured Requirements:</span>
-              <div className="ml-4 mt-2 space-y-1">
-                <p>App Name: {project.extractedRequirements.appName}</p>
-                <p>
-                  Entities: {project.extractedRequirements.entities.join(", ")}
-                </p>
-                <p>Roles: {project.extractedRequirements.roles.join(", ")}</p>
-                <p>
-                  Features: {project.extractedRequirements.features.join(", ")}
-                </p>
-              </div>
-            </div>
-            <p className="text-gray-300">
-              <span className="font-medium">Created:</span>{" "}
-              {new Date(project.createdAt).toLocaleDateString()}
-            </p>
-          </div>
-        </div>
-
-        <div className="bg-gray-800 rounded-lg p-6">
-          <h2 className="text-xl font-semibold text-white mb-3">Description</h2>
-          <p className="text-gray-300">{project.userDescription}</p>
-        </div>
+    <>
+      <div className="bg-gray-800 rounded-lg p-6">
+        <h2 className="text-xl font-semibold text-white mb-3">Description</h2>
+        <p className="text-gray-300">{project.userDescription}</p>
       </div>
-    </div>
+      <ProjectResults projectData={project} />
+    </>
   );
 }
 
