@@ -59,11 +59,9 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild onClick={() => navigate("/")}>
-                  <a>
-                    <SquarePen />
-                    <span>New Project</span>
-                  </a>
+                <SidebarMenuButton onClick={() => navigate("/")}>
+                  <SquarePen />
+                  <span>New Project</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <Collapsible defaultOpen className="group/collapsible">
