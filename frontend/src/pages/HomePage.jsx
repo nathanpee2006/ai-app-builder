@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { analyseDescription } from "../utils/apiUtils";
+import { analyseDescription, getProjects } from "../utils/apiUtils";
 import DescriptionInput from "../components/DescriptionInput";
 import ProjectResults from "../components/ProjectResults";
 
-function HomePage() {
+function HomePage({ handleProjectRefresh }) {
   const [description, setDescription] = useState("");
   const [projectData, setProjectData] = useState(null);
   console.log(projectData);
@@ -12,6 +12,7 @@ function HomePage() {
     try {
       const response = await analyseDescription(description);
       setProjectData(response);
+      await handleProjectRefresh();
     } catch (error) {
       console.error("Error submitting:", error);
     }

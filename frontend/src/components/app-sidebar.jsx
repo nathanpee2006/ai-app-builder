@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getProjects } from "../utils/apiUtils";
 
 import { FolderClosed, SquarePen } from "lucide-react";
 import {
@@ -22,29 +20,8 @@ import {
   CollapsibleContent,
 } from "@/components/ui/collapsible";
 
-export function AppSidebar() {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+export function AppSidebar({ projects }) {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    async function fetchProjects() {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await getProjects();
-        setProjects(response);
-      } catch (err) {
-        console.error("Failed to fetch projects:", err);
-        setError("Failed to load projects");
-        setProjects([]);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchProjects();
-  }, []);
 
   return (
     <Sidebar>
@@ -74,31 +51,19 @@ export function AppSidebar() {
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <SidebarMenuSub>
-                      {loading && (
-                        <div className="px-3 py-2 text-sm text-gray-400">
-                          Loading projects...
-                        </div>
-                      )}
-                      {error && (
-                        <div className="px-3 py-2 text-sm text-red-400">
-                          {error}
-                        </div>
-                      )}
-                      {!loading && !error && projects.length === 0 && (
+                      {projects.length === 0 && (
                         <div className="px-3 py-2 text-sm text-gray-400">
                           No projects found
                         </div>
                       )}
-                      {!loading &&
-                        !error &&
-                        projects.map((project) => (
-                          <SidebarMenuSubButton
-                            key={project._id}
-                            onClick={() => navigate(`/projects/${project._id}`)}
-                          >
-                            {project.extractedRequirements.appName}
-                          </SidebarMenuSubButton>
-                        ))}
+                      {projects.map((project) => (
+                        <SidebarMenuSubButton
+                          key={project._id}
+                          onClick={() => navigate(`/projects/${project._id}`)}
+                        >
+                          {project.extractedRequirements.appName}
+                        </SidebarMenuSubButton>
+                      ))}
                     </SidebarMenuSub>
                   </CollapsibleContent>
                 </SidebarMenuItem>
