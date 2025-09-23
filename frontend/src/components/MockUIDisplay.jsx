@@ -1,5 +1,6 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, RefreshCw, Globe } from "lucide-react";
 import { uiHelpers } from "../utils/uiHelpers";
@@ -100,11 +101,18 @@ function MockUIDisplay({ requirements, uiMetadata }) {
                             <label className="text-sm text-gray-700">
                               {field.name}
                             </label>
-                            <Input
-                              type={field.type}
-                              placeholder={field.name}
-                              className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
-                            />
+                            {field.type !== "textarea" ? (
+                              <Input
+                                type={field.type}
+                                placeholder={field.name}
+                                className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
+                              />
+                            ) : (
+                              <Textarea
+                                placeholder={field.name}
+                                className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-500"
+                              />
+                            )}
                           </div>
                         ))}
                       </div>

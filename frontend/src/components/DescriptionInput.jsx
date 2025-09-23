@@ -17,7 +17,7 @@ function DescriptionInput({
             placeholder="ask to build..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full h-14 px-6 text-lg bg-gray-800 border-gray-700 text-white placeholder-gray-400 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            className="w-full px-6 text-lg bg-gray-800 border-gray-700 text-white placeholder-gray-400 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
             disabled={loading}
           />
 
