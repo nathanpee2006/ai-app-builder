@@ -1,26 +1,17 @@
-import { useState } from "react";
-import { analyseDescription, getProjects } from "../utils/apiUtils";
+import { useProjectForm } from "../hooks/useProjectForm";
 import DescriptionInput from "../components/DescriptionInput";
 import ProjectResults from "../components/ProjectResults";
 
 function HomePage({ handleProjectRefresh }) {
-  const [description, setDescription] = useState("");
-  const [projectData, setProjectData] = useState(null);
-
-  const handleSubmit = async () => {
-    try {
-      const response = await analyseDescription(description);
-      setProjectData(response);
-      await handleProjectRefresh();
-    } catch (error) {
-      console.error("Error submitting:", error);
-    }
-  };
-
-  const handleNewProject = () => {
-    setProjectData(null);
-    setDescription(null);
-  };
+  const {
+    description,
+    setDescription,
+    loading,
+    error,
+    projectData,
+    handleSubmit,
+    handleNewProject,
+  } = useProjectForm(handleProjectRefresh);
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center p-4">
@@ -46,13 +37,19 @@ function HomePage({ handleProjectRefresh }) {
         >
           build with a single prompt. no coding needed.
         </p>
-        {!projectData ? (
+        {!projectData && (
           <DescriptionInput
             description={description}
             setDescription={setDescription}
             onSubmit={handleSubmit}
+            loading={loading}
+            error={error}
           />
-        ) : (
+        )}
+        {loading && !projectData && (
+          <p className="text-xl text-gray-400">Generating mock UI...</p>
+        )}
+        {projectData && !loading && !error && (
           <ProjectResults
             projectData={projectData}
             handleNewProject={handleNewProject}
