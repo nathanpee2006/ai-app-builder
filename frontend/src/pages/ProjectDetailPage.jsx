@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import ProjectResults from "../components/ProjectResults";
+import RequirementsDisplay from "../components/RequirementsDisplay";
+import MockUIDisplay from "../components/MockUIDisplay";
 
 import { getProject } from "../utils/apiUtils";
 
@@ -61,7 +62,20 @@ function ProjectDetailPage() {
           <p className="text-gray-300">{project.userDescription}</p>
         </div>
 
-        <ProjectResults projectData={project} />
+        {/* Requirements */}
+        <h2 className="text-2xl font-semibold text-white mb-3">
+          AI Captured Requirements
+        </h2>
+        <RequirementsDisplay requirements={project.extractedRequirements} />
+
+        {/* Mock UI */}
+        <h2 className="text-2xl font-semibold text-white mt-8 mb-3">
+          Generated UI
+        </h2>
+        <MockUIDisplay
+          requirements={project.extractedRequirements}
+          uiMetadata={project.uiMetadata}
+        />
       </div>
     </div>
   );

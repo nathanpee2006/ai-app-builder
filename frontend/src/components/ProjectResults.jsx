@@ -1,7 +1,8 @@
 import RequirementsDisplay from "./RequirementsDisplay";
 import MockUIDisplay from "./MockUIDisplay";
+import { Button } from "@/components/ui/button";
 
-function ProjectResults({ projectData }) {
+function ProjectResults({ projectData, handleNewProject }) {
   return (
     <>
       {/* Requirements */}
@@ -18,6 +19,8 @@ function ProjectResults({ projectData }) {
         requirements={projectData.extractedRequirements}
         uiMetadata={projectData.uiMetadata}
       />
+
+      <Button onClick={handleNewProject}>Generate New Project</Button>
     </>
   );
 }

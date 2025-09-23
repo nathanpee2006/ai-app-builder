@@ -6,7 +6,6 @@ import ProjectResults from "../components/ProjectResults";
 function HomePage({ handleProjectRefresh }) {
   const [description, setDescription] = useState("");
   const [projectData, setProjectData] = useState(null);
-  console.log(projectData);
 
   const handleSubmit = async () => {
     try {
@@ -16,6 +15,11 @@ function HomePage({ handleProjectRefresh }) {
     } catch (error) {
       console.error("Error submitting:", error);
     }
+  };
+
+  const handleNewProject = () => {
+    setProjectData(null);
+    setDescription(null);
   };
 
   return (
@@ -49,7 +53,10 @@ function HomePage({ handleProjectRefresh }) {
             onSubmit={handleSubmit}
           />
         ) : (
-          <ProjectResults projectData={projectData} />
+          <ProjectResults
+            projectData={projectData}
+            handleNewProject={handleNewProject}
+          />
         )}
       </div>
     </div>
