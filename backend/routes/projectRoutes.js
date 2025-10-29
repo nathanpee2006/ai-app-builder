@@ -7,4 +7,6 @@ router.get("/", projectController.getAllProjects);
 
 router.get("/:id", projectController.getProjectById);
 
+router.delete("/:id", projectController.deleteProject);
+
 export default router;

@@ -43,4 +43,35 @@ export const projectController = {
       });
     }
   },
+  deleteProject: async (req, res) => {
+    try {
+      const projectId = req.params.id;
+
+      // Validate projectId format (MongoDB ObjectId)
+      if (!projectId || projectId.length !== 24) {
+        return res.status(400).json({
+          error: "Invalid project ID format",
+        });
+      }
+
+      const deletedProject = await Project.findByIdAndDelete(projectId);
+
+      if (!deletedProject) {
+        return res.status(404).json({
+          error: "Project not found",
+        });
+      }
+
+      res.json({
+        success: true,
+        message: "Project deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      res.status(500).json({
+        error: "Failed to delete project",
+        message: error.message,
+      });
+    }
+  },
 };

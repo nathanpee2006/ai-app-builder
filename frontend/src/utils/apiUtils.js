@@ -33,3 +33,13 @@ export async function getProject(projectId) {
     throw error;
   }
 }
+
+export async function deleteProject(projectId) {
+  try {
+    const response = await axios.delete(`${API_URL}/api/projects/${projectId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error during DELETE request:", error);
+    throw error;
+  }
+}

@@ -32,7 +32,7 @@ function ProjectManager() {
 
   return (
     <>
-      <AppSidebar projects={projects} />
+      <AppSidebar projects={projects} onProjectDeleted={refreshProjects} />
       <SidebarTrigger
         className="fixed top-4 left-4 z-50 transition-[left]
                      duration-200 ease-linear
